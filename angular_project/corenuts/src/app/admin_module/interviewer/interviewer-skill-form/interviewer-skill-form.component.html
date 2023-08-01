@@ -1,0 +1,21 @@
+<div class="form-container">
+  <form
+    class="example-form"
+    [formGroup]="interviewerSkillForm"
+    (submit)="submitSkill()"
+  >
+    <h4>Interviewer Skill</h4>
+    <mat-form-field class="example-full-width">
+      <mat-label>Skill Name </mat-label>
+      <input matInput value="Siva" formControlName="interviewerSkillName" />
+    </mat-form-field>
+    <div class="flex-center">
+      <button mat-raised-button type="submit" color="primary">
+        {{ submitType }}
+      </button>
+      <button mat-raised-button mat-dialog-close type="button" color="warn">
+        Close
+      </button>
+    </div>
+  </form>
+</div>

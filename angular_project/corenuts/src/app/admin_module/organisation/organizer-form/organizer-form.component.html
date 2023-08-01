@@ -1,0 +1,60 @@
+<div class="form-container">
+  <form
+    class="example-form"
+    [formGroup]="organizerForm"
+    (submit)="submitOrganizer()"
+  >
+    <!-- <h1>Organizer Registration Form</h1> -->
+    <mat-form-field class="example-full-width">
+      <mat-label>Organizer Name </mat-label>
+      <input matInput value="Siva" formControlName="organizerName" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Mobile Number </mat-label>
+      <input matInput value="" formControlName="organizerMobileNumber" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Email </mat-label>
+      <input matInput value="" formControlName="organizerEmail" />
+    </mat-form-field>
+
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+        <mat-radio-group
+          aria-label="Select an option"
+          class="example-full-width"
+          formControlName="organizerGender"
+          aria-placeholder="select Gender"
+        >
+          <td>
+            <mat-label>Gender</mat-label>
+            <mat-radio-button value="Male">Male</mat-radio-button>
+            <mat-radio-button value="Female">Female</mat-radio-button>
+          </td>
+        </mat-radio-group>
+      </tr>
+    </table>
+    <div formGroupName="organisation">
+      <mat-form-field class="example-full-width">
+        <mat-label>Select Organisation</mat-label>
+        <mat-select formControlName="organisationId">
+          <mat-option
+            *ngFor="let organisation of getOrganisations(); let i = index"
+            [value]="organisation.organisationId"
+          >
+            {{ organisation.organisationName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Form controls for organizer information -->
+
+    <div class="flex-center">
+      <button mat-raised-button type="submit" color="primary">submit</button>
+      <button mat-raised-button mat-dialog-close type="button" color="warn">
+        Close
+      </button>
+    </div>
+  </form>
+</div>

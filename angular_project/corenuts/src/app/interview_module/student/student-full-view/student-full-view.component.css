@@ -1,0 +1,19 @@
+.example-card {
+  max-width: auto;
+  height: auto;
+}
+
+table {
+  margin-bottom: 10px;
+}
+table tr th,
+td {
+  padding: 2px 2px;
+}
+
+mat-card-actions,
+mat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,77 @@
+<div class="form-container">
+  <form
+    class="example-form"
+    [formGroup]="organisationForm"
+    (submit)="submitOrganisation()"
+  >
+    <!-- <h1>Organisation Registration Form</h1> -->
+    <mat-form-field class="example-full-width">
+      <mat-label>Organisation Name </mat-label>
+      <input matInput value="Siva" formControlName="organisationName" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Mobile Number </mat-label>
+      <input matInput value="" formControlName="organisationMobileNumber" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Email </mat-label>
+      <input matInput value="" formControlName="organisationEmail" />
+    </mat-form-field>
+
+    <table formGroupName="address">
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Street</mat-label>
+            <input matInput placeholder="" formControlName="street" />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>locality</mat-label>
+            <input matInput placeholder="" formControlName="locality" />
+          </mat-form-field>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>City</mat-label>
+            <input matInput placeholder="Ex. " formControlName="city" />
+          </mat-form-field>
+        </td>
+
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>pincode</mat-label>
+            <input matInput placeholder="" formControlName="pincode" />
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>state</mat-label>
+            <mat-select formControlName="state">
+              <mat-option
+                *ngFor="let state of getStates(); let i = index"
+                [value]="state"
+              >
+                {{ state }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+    <!-- Form controls for organisation information -->
+
+    <div class="flex-center">
+      <button mat-raised-button type="submit" color="primary">submit</button>
+      <button mat-raised-button mat-dialog-close type="button" color="warn">
+        Close
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,138 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <!-- <mat-card-title>Shiba Inu</mat-card-title>
+    <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+    <h3 style="border-bottom: 2px solid black; align-self: center">
+      {{ "Interview Level " + interviewRound.interviewRoundNumber }}
+    </h3>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="studentExamMarkForm">
+      <div class="form-group mark-display">
+        <div class="skill-name">Exam Marks</div>
+        <div>
+          <input
+            type="text"
+            formControlName="studentAchievedMarks"
+            placeholder="enter marks"
+          />
+        </div>
+      </div>
+    </form>
+    <form *ngIf="interviewRoundForm" [formGroup]="interviewRoundForm">
+      <ng-container formArrayName="interviewSkillRatings">
+        <div
+          *ngFor="
+            let rating of interviewRound.interviewSkillRatings;
+            let i = index
+          "
+          class="form-group"
+        >
+          <div [formGroupName]="i" class="skill-rating-group">
+            <div class="skill-rating-container">
+              <div class="skill-name">
+                {{ rating.interviewSkill.interviewSkillName }}
+              </div>
+              <div class="input-group">
+                <select
+                  class="custom-select"
+                  formControlName="interviewSkillRatingAchieved"
+                >
+                  <option selected [value]="0">0</option>
+                  <option
+                    class="option-input"
+                    *ngFor="let point of points"
+                    [value]="point"
+                  >
+                    {{ point }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="feedback-container">
+              <textarea
+                rows="1"
+                cols="130"
+                style="width: 100%"
+                placeholder="Type your skill feedback here"
+                formControlName="interviewSkillFeedback"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="form-group">
+        <div class="skill-name">Overall Feedback</div>
+        <textarea
+          rows="3"
+          cols="130"
+          style="width: 100%"
+          placeholder="Type your feedback here"
+          formControlName="interviewRoundFeedback"
+        ></textarea>
+      </div>
+
+      <div class="radio-input form-group">
+        <div class="skill-name">Round Result</div>
+        <div class="radio-group">
+          <label
+            style="margin-right: 20px"
+            *ngFor="let point of ['Selected', 'Rejected', 'On Hold']"
+          >
+            <input
+              type="radio"
+              formControlName="interviewRoundResult"
+              [value]="point"
+            />
+            {{ point }}
+          </label>
+        </div>
+      </div>
+    </form>
+    <form [formGroup]="studentFinalResultForm">
+      <div class="radio-input form-group">
+        <div class="skill-name">Final Round Result</div>
+        <div class="radio-group">
+          <!-- Selected option -->
+          <label style="margin-right: 20px">
+            <input
+              type="radio"
+              formControlName="interviewFinalResult"
+              [value]="'Selected'"
+            />
+            Selected
+          </label>
+          <label style="margin-right: 20px">
+            <input
+              type="radio"
+              formControlName="interviewFinalResult"
+              [value]="'Rejected'"
+            />
+            Rejected
+          </label>
+          <label style="margin-right: 20px">
+            <input
+              type="radio"
+              formControlName="interviewFinalResult"
+              [value]=""
+            />
+            Re-Interview
+          </label>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <div>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="updateInterviewRound()"
+      >
+        update changes
+      </button>
+      <button mat-raised-button color="warn" mat-dialog-close="">close</button>
+    </div>
+  </mat-card-actions>
+</mat-card>

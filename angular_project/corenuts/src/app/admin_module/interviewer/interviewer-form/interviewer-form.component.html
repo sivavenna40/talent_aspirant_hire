@@ -1,0 +1,135 @@
+<div class="form-container">
+  <form
+    class="example-form"
+    [formGroup]="interviewerForm"
+    (submit)="submitInterviewer()"
+  >
+    <!-- <h1>Interviewer Registration Form</h1> -->
+    <table>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Name </mat-label>
+            <input matInput value="" formControlName="interviewerName" />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Age </mat-label>
+            <input matInput value="" formControlName="interviewerAge" />
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Mobile Number </mat-label>
+            <input
+              matInput
+              value=""
+              formControlName="interviewerMobileNumber"
+            />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Email </mat-label>
+            <input matInput value="" formControlName="interviewerEmail" />
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+        <mat-radio-group
+          aria-label="Select an option"
+          class="example-full-width"
+          formControlName="interviewerGender"
+          aria-placeholder="select Gender"
+        >
+          <td>
+            <mat-label>Gender</mat-label>
+            <mat-radio-button value="Male">Male</mat-radio-button>
+            <mat-radio-button value="Female">Female</mat-radio-button>
+          </td>
+        </mat-radio-group>
+      </tr>
+    </table>
+    <table formGroupName="address">
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Street</mat-label>
+            <input matInput placeholder="" formControlName="street" />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>locality</mat-label>
+            <input matInput placeholder="" formControlName="locality" />
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>City</mat-label>
+            <input matInput placeholder="" formControlName="city" />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>state</mat-label>
+            <mat-select formControlName="state">
+              <mat-option
+                *ngFor="let state of states; let i = index"
+                [value]="state"
+              >
+                {{ state }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- <mat-form-field class="example-full-width">
+            <mat-label>state</mat-label>
+            <input
+              matInput
+              placeholder=""
+              formControlName="state"
+            />
+          </mat-form-field> -->
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>pincode</mat-label>
+            <input matInput placeholder="" formControlName="pincode" />
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+    <!-- Form controls for interviewer information -->
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Select Skills</mat-label>
+      <mat-select formControlName="interviewerSkillIds" multiple>
+        <mat-option
+          *ngFor="let skill of getInterviewerSkills(); let i = index"
+          [value]="skill.interviewerSkillId"
+        >
+          {{ skill.interviewerSkillName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="flex-center">
+      <button mat-raised-button type="submit" color="primary">
+        {{ submitType }}
+      </button>
+      <button mat-raised-button mat-dialog-close type="button" color="warn">
+        Close
+      </button>
+    </div>
+  </form>
+</div>

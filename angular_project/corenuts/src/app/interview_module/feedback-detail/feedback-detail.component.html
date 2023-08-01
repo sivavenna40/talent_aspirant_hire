@@ -1,0 +1,87 @@
+<div class="student-header">
+  <div>
+    <span>Student Name</span>:&nbsp;{{
+      student.studentName + "(" + student.interviewFinalResult + ")"
+    }}
+  </div>
+  <div>
+    <span>Student Marks</span>:&nbsp;{{
+      student.studentExamMark.studentAchievedMarks
+    }}
+  </div>
+  <div>
+    <span>Degree</span>:&nbsp;{{
+      student.studentEducationDetail.degree +
+        " " +
+        student.studentEducationDetail.degreeStream
+    }}
+  </div>
+  <div>
+    <span>Year Of Passout</span>:&nbsp;{{
+      student.studentEducationDetail.yearOfPassout
+    }}
+  </div>
+  <div>
+    <button mat-raised-button color="warn" routerLink="/home/interview-result">
+      Back
+    </button>
+  </div>
+</div>
+<mat-card class="example-card" *ngFor="let interviewRound of interviewRounds">
+  <mat-card-header>
+    <mat-card-title style="border-bottom: 2px solid black"
+      >{{ "Interview Level " + interviewRound.interviewRoundNumber }}
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <table>
+      <tr>
+        <th>Interview Round Result</th>
+        <th
+          [ngStyle]="{
+            color:
+              interviewRound.interviewRoundResult == 'Selected'
+                ? 'green'
+                : 'red'
+          }"
+        >
+          {{ interviewRound.interviewRoundResult }}
+        </th>
+      </tr>
+      <tr>
+        <th>Interviewer</th>
+        <th>{{ interviewRound.interviewer.interviewerName }}</th>
+      </tr>
+
+      <!-- <tr>
+        <th>Education Details</th>
+      </tr> -->
+      <tr>
+        <th>Skill Name</th>
+        <th>Rating</th>
+        <th>Feedback</th>
+      </tr>
+      <tr *ngFor="let rating of interviewRound.interviewSkillRatings">
+        <td>{{ rating.interviewSkill.interviewSkillName }}</td>
+        <td>{{ rating.interviewSkillRatingAchieved }}</td>
+        <td>{{ rating.interviewSkillFeedback }}</td>
+      </tr>
+      <tr>
+        <td>Overall Interview Feedback</td>
+        <td></td>
+        <td>{{ interviewRound.interviewRoundFeedback }}</td>
+      </tr>
+    </table>
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      *ngIf="isLatestInterviewRound(interviewRound.interviewRoundNumber)"
+      style="margin-left: 12px"
+      mat-raised-button
+      color="primary"
+      (click)="updateFeedback(interviewRound)"
+    >
+      update
+    </button>
+  </mat-card-actions>
+</mat-card>

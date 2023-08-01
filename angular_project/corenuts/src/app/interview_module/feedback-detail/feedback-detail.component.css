@@ -1,0 +1,21 @@
+.student-header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 50px;
+  background-color: rgb(211, 230, 247);
+}
+
+.student-header span {
+  font-weight: 500;
+}
+.example-card {
+  margin: 10px 0px;
+  padding: 10px;
+}
+
+table tr td,
+th {
+  min-width: 40px;
+  padding: 5px;
+}

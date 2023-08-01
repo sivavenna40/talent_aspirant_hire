@@ -1,0 +1,162 @@
+// import { Component, OnInit } from '@angular/core';
+// import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+// import { MatDialog } from '@angular/material/dialog';
+// import { ActivatedRoute } from '@angular/router';
+// import { Student } from 'src/app/model/student';
+// import { InterviewSkillService } from 'src/app/service/interview-skill.service';
+// import { OrganisationService } from 'src/app/service/organisation.service';
+// import { RestDataSource } from 'src/app/service/restdataSource';
+// import { StudentFullViewComponent } from '../student/student-full-view/student-full-view.component';
+// import { InterviewSkill } from 'src/app/model/interviewSkill';
+// import { InterviewRoundService } from 'src/app/service/interview-round.service';
+
+// @Component({
+//   selector: 'app-interview-panel',
+//   templateUrl: './interview-panel.component.html',
+//   styleUrls: ['./interview-panel.component.css'],
+// })
+// export class InterviewPanelComponent implements OnInit {
+//   studentId: any;
+//   interviewSkillRatings!: FormArray;
+//   student!: Student;
+//   interviewRoundForm!: FormGroup;
+//   interviewRatingForm!: FormGroup;
+//   points = [1, 2, 3, 4, 5];
+
+//   constructor(
+//     private route: ActivatedRoute,
+//     private dialog: MatDialog,
+//     private repo: RestDataSource,
+//     private formBuilder: FormBuilder,
+//     private organisationService: OrganisationService,
+//     private interviewRoundService: InterviewRoundService,
+//     private interviewSkillService: InterviewSkillService
+//   ) {}
+
+//   ngOnInit(): void {
+//     this.route.paramMap.subscribe((paramMap) => {
+//       this.studentId = paramMap.get('studentId');
+//       console.log(this.studentId);
+//     });
+//     this.repo.getStudentById(this.studentId).subscribe({
+//       next: (data) => {
+//         (this.student = data), console.log(this.student);
+//       },
+//     });
+
+//     this.interviewRoundForm = this.formBuilder.group({
+//       interviewRoundId: [''],
+//       interviewRoundResult: ['Selected'],
+//       interviewer: this.formBuilder.group({
+//         interviewerId: [5],
+//       }),
+//       student: this.formBuilder.group({
+//         studentId: [this.studentId],
+//       }),
+//       interviewSkillRatings: this.formBuilder.array([]),
+//     });
+//     this.interviewRatingForm = this.formBuilder.group({});
+//     this.repo.getInterviewSkills().subscribe({
+//       next: (data) => {
+//         console.log(data);
+//         data.forEach((skill: any) => {
+//           // Add a form control for each property
+//           this.interviewRatingForm.addControl(
+//             skill.interviewSkillName,
+//             this.formBuilder.control('')
+//           );
+//           this.interviewRatingForm.addControl(
+//             skill.interviewSkillName + 'Feedback',
+//             this.formBuilder.control('')
+//           );
+//         });
+//       },
+//     });
+//   }
+
+//   createInterviewSkillRating(
+//     interviewSkillId: number,
+//     interviewSkillName: string
+//   ): FormGroup {
+//     console.log(this.interviewRatingForm.value);
+//     let rating = this.interviewRatingForm.get(interviewSkillName)?.value;
+//     console.log();
+//     console.log(interviewSkillName);
+//     return this.formBuilder.group({
+//       interviewSkill: this.formBuilder.group({
+//         interviewSkillId: [interviewSkillId, Validators.required],
+//         interviewSkillName: [interviewSkillName, Validators.required],
+//       }),
+//       interviewSkillRatingAchieved: [rating, Validators.required],
+//     });
+//   }
+
+//   submitinterviewRound(): void {
+//     // if (this.interviewRoundForm.invalid) {
+//     //   return;
+//     // }
+//     this.repo.getInterviewSkills().subscribe({
+//       next: (data) => {
+//         console.log(data);
+//         data.forEach((skill: InterviewSkill) => {
+//           const interviewSkillRating = this.createInterviewSkillRating(
+//             skill.interviewSkillId,
+//             skill.interviewSkillName
+//           );
+//           this.interviewSkillRatings = this.interviewRoundForm.get(
+//             'interviewSkillRatings'
+//           ) as FormArray;
+//           console.log(interviewSkillRating.value);
+//           this.interviewSkillRatings?.push(interviewSkillRating);
+//         });
+//         console.log(this.interviewRatingForm.value);
+//         console.log(this.interviewRoundForm.value);
+//         // this.interviewRoundService.saveInterviewRound(
+//         //   this.interviewRoundForm.value
+//         // );
+
+//         this.interviewRoundForm.reset();
+//       },
+//     });
+//   }
+
+//   getOrganisations() {
+//     return this.organisationService.getOrganisations();
+//   }
+
+//   getInterviewSkills() {
+//     return this.interviewSkillService.getInterviewSkills();
+//   }
+
+//   returnRatings() {
+//     this.interviewRoundForm.get('interviewSkillRatings');
+//   }
+
+//   openStudentDetails(studentId: number) {
+//     this.dialog.open(StudentFullViewComponent, {
+//       data: studentId,
+//     });
+//   }
+// }
+
+//iterview-panel html
+// <mat-card class="example-card">
+//   <mat-card-header> </mat-card-header>
+//   <mat-card-content>
+//     <form [formGroup]="interviewRatingForm" (ngSubmit)="submitinterviewRound()">
+//       <table>
+//         <tr *ngFor="let control of interviewRatingForm.controls | keyvalue">
+//           <td>
+//             <label>{{ control.key }}</label>
+//           </td>
+//           <td><input type="text" [formControlName]="control.key" /></td>
+//         </tr>
+//       </table>
+//       <button mat-raised-button type="submit">Submit</button>
+//     </form>
+//   </mat-card-content>
+//   <!-- <mat-card-actions>
+//     <button mat-button>LIKE</button>
+//     <button mat-button>SHARE</button>
+//   </mat-card-actions> -->
+// </mat-card>

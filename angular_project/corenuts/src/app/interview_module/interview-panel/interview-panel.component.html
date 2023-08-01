@@ -1,0 +1,164 @@
+<div class="student-header">
+  <div><span>Student</span>:&nbsp;{{ student.studentName }}</div>
+  <div>
+    <span>Degree</span>:&nbsp;{{
+      student.studentEducationDetail.degree +
+        " " +
+        student.studentEducationDetail.degreeStream
+    }}
+  </div>
+  <div>
+    <span>Year Of Passout</span>:&nbsp;{{
+      student.studentEducationDetail.yearOfPassout
+    }}
+  </div>
+  <div><span>Intervewer</span>:&nbsp;{{ interviewer.interviewerName }}</div>
+
+  <div>
+    <button mat-raised-button (click)="openStudentDetails(student.studentId)">
+      Student Details
+    </button>
+  </div>
+</div>
+
+<mat-card class="example-card">
+  <div class="rating-points">
+    <div>
+      <span style="font-weight: 600; font-size: larger">Ratings</span>
+    </div>
+    <div *ngFor="let interviewRatingPoint of getInterviewRatingPoints()">
+      {{
+        interviewRatingPoint.ratingDescription +
+          " : " +
+          interviewRatingPoint.ratingPoint
+      }}
+    </div>
+  </div>
+  <mat-card-header>
+    <div style="margin: 0px 20px 10px 0px">
+      <button
+        style="margin: 0px 20px 10px 0px"
+        *ngFor="let round of studentInterviewRounds"
+        mat-raised-button
+        color="primary"
+        (click)="openLevelDetails(round)"
+      >
+        {{ "Level " + round.interviewRoundNumber + " info" }}
+      </button>
+    </div>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="form-group mark-display">
+      <div class="skill-name">Interview Level</div>
+      <div>
+        {{ currentInterviewRoundLevel }}
+      </div>
+    </div>
+    <form [formGroup]="studentExamMarkForm">
+      <div class="form-group mark-display">
+        <div class="skill-name">Exam Marks</div>
+        <div *ngIf="studentAchievedMarks">
+          {{ studentAchievedMarks }}
+        </div>
+        <div>
+          <input
+            *ngIf="!studentAchievedMarks"
+            type="text"
+            formControlName="studentAchievedMarks"
+            placeholder="enter marks"
+          />
+        </div>
+      </div>
+    </form>
+    <form [formGroup]="interviewRoundForm">
+      <ng-container formArrayName="interviewSkillRatings">
+        <div
+          *ngFor="let skill of interviewSkills; let i = index"
+          class="form-group"
+        >
+          <div [formGroupName]="i" class="skill-rating-group">
+            <div class="skill-rating-container">
+              <div class="skill-name">{{ skill.interviewSkillName }}</div>
+              <div class="input-group">
+                <select
+                  class="custom-select"
+                  formControlName="interviewSkillRatingAchieved"
+                >
+                  <option selected [value]="0">0</option>
+                  <option
+                    class="option-input"
+                    *ngFor="
+                      let interviewRatingPoint of getInterviewRatingPoints()
+                    "
+                    [value]="interviewRatingPoint.ratingPoint"
+                  >
+                    {{ interviewRatingPoint.ratingPoint }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="feedback-container">
+              <textarea
+                rows="1"
+                cols="130"
+                style="width: 100%"
+                placeholder="Type your skill feedback here"
+                formControlName="interviewSkillFeedback"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="form-group">
+        <div class="skill-name">Overall Feedback</div>
+        <textarea
+          rows="3"
+          cols="130"
+          style="width: 100%"
+          placeholder="Type your feedback here"
+          formControlName="interviewRoundFeedback"
+        ></textarea>
+      </div>
+
+      <div class="radio-input form-group">
+        <div class="skill-name">Round Result</div>
+        <div class="radio-group">
+          <label
+            style="margin-right: 20px"
+            *ngFor="let point of ['Selected', 'Rejected', 'On Hold']"
+          >
+            <input
+              type="radio"
+              formControlName="interviewRoundResult"
+              [value]="point"
+            />
+            {{ point }}
+          </label>
+        </div>
+      </div>
+    </form>
+    <div>
+      <mat-checkbox [(ngModel)]="isChecked"
+        ><span>is it final round!</span></mat-checkbox
+      >
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div>
+      <button
+        (click)="submitInterviewRound()"
+        mat-raised-button
+        color="primary"
+      >
+        Submit
+      </button>
+      <button mat-raised-button routerLink="/home/interview-list" color="warn">
+        Back
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>
+<!-- {{ interviewRoundForm.value |json}} -->
+{{ isChecked }}

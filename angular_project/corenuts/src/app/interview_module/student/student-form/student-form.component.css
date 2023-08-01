@@ -1,0 +1,46 @@
+.form-container {
+  background-color: rgba(220, 220, 220, 1);
+  height: 100vh; /* You can adjust the height as needed */
+  /* overflow: auto; */
+  width: fit-content;
+}
+
+.example-form {
+  /* height: 60%; */
+  margin: auto 0px;
+  /* max-width: 500px; */
+  width: fit-content;
+  /* width: 100%; */
+  padding: 30px 35px;
+  background-color: rgba(240, 240, 240, 1);
+  border-radius: 10px;
+}
+
+.example-full-width {
+  width: 100%;
+  height: 70px;
+}
+
+table {
+  margin: 0px;
+}
+td {
+  padding-right: 8px;
+  min-width: 280px;
+  /* border: 1px solid black; */
+}
+
+.flex-center {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px;
+}
+
+mat-label {
+  font-size: small;
+}
+
+.flex-center button {
+  padding: 20px 30px;
+}

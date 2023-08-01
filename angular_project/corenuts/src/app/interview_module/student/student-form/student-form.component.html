@@ -1,0 +1,261 @@
+<div class="form-container">
+  <form
+    class="example-form"
+    [formGroup]="studentForm"
+    (submit)="submitStudent()"
+  >
+    <div>
+      <div formGroupName="organisation">
+        <mat-form-field class="example-full-width">
+          <mat-label>Select Organisation</mat-label>
+          <mat-select
+            formControlName="organisationId"
+            (selectionChange)="getInterviewSchedules()"
+          >
+            <mat-option
+              *ngFor="let organisation of getOrganisations(); let i = index"
+              [value]="organisation.organisationId"
+            >
+              {{ organisation.organisationName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- <h1>Student Registration Form</h1> -->
+    <table>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Name </mat-label>
+            <input matInput value="Siva" formControlName="studentName" />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Mobile Number </mat-label>
+            <input matInput value="" formControlName="studentMobileNumber" />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Email </mat-label>
+            <input matInput value="" formControlName="studentEmail" />
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Adhar Number</mat-label>
+            <input
+              matInput
+              placeholder=" "
+              formControlName="studentAadharNumber"
+            />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Date of Birth</mat-label>
+            <input
+              matInput
+              [(ngModel)]="selectedDate"
+              [matDatepicker]="picker"
+              placeholder="Select a date"
+              formControlName="studentDob"
+              name="studentDob"
+              required
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-radio-group
+            aria-label="Select an option"
+            class="example-full-width"
+            formControlName="studentGender"
+            aria-placeholder="select Gender"
+          >
+            <mat-label>Gender</mat-label>
+            <mat-radio-button value="Male">Male</mat-radio-button>
+            <mat-radio-button value="Female">Female</mat-radio-button>
+          </mat-radio-group>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Select Interview Date</mat-label>
+            <mat-select formControlName="interviewFinalResultDate">
+              <mat-option
+                *ngFor="let schedule of interviewSchedules; let i = index"
+                [value]="schedule.interviewScheduleDate"
+              >
+                {{ schedule.interviewScheduleDate }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+    <table formGroupName="address">
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Street</mat-label>
+            <input matInput placeholder="" formControlName="street" />
+          </mat-form-field>
+        </td>
+
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>locality</mat-label>
+            <input matInput placeholder="" formControlName="locality" />
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>City</mat-label>
+            <input matInput placeholder=" " formControlName="city" />
+          </mat-form-field>
+        </td>
+
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>state</mat-label>
+            <mat-select formControlName="state">
+              <mat-option
+                *ngFor="let state of getStates(); let i = index"
+                [value]="state"
+              >
+                {{ state }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>pincode</mat-label>
+            <input matInput placeholder="" formControlName="pincode" />
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+    <table formGroupName="studentEducationDetail">
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Degree</mat-label>
+            <input matInput placeholder="" formControlName="degree" />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Degree Stream</mat-label>
+            <input matInput placeholder="" formControlName="degreeStream" />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Degree Grade/Percentage</mat-label>
+            <input matInput placeholder="" formControlName="degreeAggregate" />
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>+2 Grade/Percentage</mat-label>
+            <input matInput placeholder=" " formControlName="twelthAggregate" />
+          </mat-form-field>
+        </td>
+
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Diploma Grade/Percentage</mat-label>
+            <input matInput placeholder="" formControlName="diplomaAggregate" />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>10th Grade/Percentage </mat-label>
+            <input matInput placeholder="" formControlName="tenthAggregate" />
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Masters Grade/Percentage</mat-label>
+            <input matInput placeholder="" formControlName="mastersAggregate" />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Year Of Passout(Highest Degree)</mat-label>
+            <mat-select formControlName="yearOfPassout">
+              <mat-option
+                *ngFor="let year of years; let i = index"
+                [value]="year"
+              >
+                {{ year }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td formGroupName="primarySkill">
+          <mat-form-field class="example-full-width">
+            <mat-label>Primary Skill</mat-label>
+            <mat-select formControlName="interviewerSkillId">
+              <mat-option
+                *ngFor="let skill of getInterviewerSkills(); let i = index"
+                [value]="skill.interviewerSkillId"
+              >
+                {{ skill.interviewerSkillName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td formGroupName="secondarySkill">
+          <mat-form-field class="example-full-width">
+            <mat-label>Secondary Skill</mat-label>
+            <mat-select formControlName="interviewerSkillId">
+              <mat-option
+                *ngFor="let skill of getInterviewerSkills(); let i = index"
+                [value]="skill.interviewerSkillId"
+              >
+                {{ skill.interviewerSkillName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Other Skills</mat-label>
+            <input matInput placeholder="" formControlName="otherSkills" />
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+    <!-- Form controls for student information -->
+
+    <div class="flex-center">
+      <button mat-raised-button type="submit" color="primary">
+        {{ submitType }}
+      </button>
+      <button mat-raised-button mat-dialog-close type="button" color="warn">
+        Close
+      </button>
+    </div>
+  </form>
+</div>

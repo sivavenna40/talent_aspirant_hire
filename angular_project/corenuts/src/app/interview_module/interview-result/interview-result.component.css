@@ -1,0 +1,18 @@
+.demo-button {
+  margin-right: 30px;
+}
+
+.example-card {
+  max-width: 200px;
+  margin: 10px;
+  padding: 10px 5px;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+}
+.result-container,
+.custom-filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

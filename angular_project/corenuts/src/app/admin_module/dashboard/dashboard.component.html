@@ -1,0 +1,71 @@
+<div
+  class="example-container"
+  [class.example-is-mobile]="mobileQuery.matches"
+  *ngIf="!shouldRun"
+>
+  <mat-toolbar color="primary" class="example-toolbar">
+    <button *ngIf="!isOrganizer" mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1 class="example-app-name">Talent Aspirants Hire</h1>
+
+    <span class="example-spacer"></span>
+    <button
+      id="log-out"
+      mat-raised-button
+      color="warn"
+      (click)="logout()"
+      *ngIf="commonService.isloggedin()"
+    >
+      Logout
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container
+    class="example-sidenav-container"
+    [style.marginTop.px]="mobileQuery.matches ? 56 : 0"
+  >
+    <mat-sidenav
+      #snav
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56"
+    >
+      <mat-nav-list>
+        <div *ngIf="isAdmin">
+          <a mat-list-item routerLink="/home/interview-skill"
+            >Interview Skills</a
+          >
+          <a mat-list-item routerLink="/home/interviewer-skill"
+            >Techinical Skills</a
+          >
+          <a mat-list-item routerLink="/home/interviewer">Interviewers</a>
+          <a mat-list-item routerLink="/home/organisation">Organisations</a>
+          <a mat-list-item routerLink="/home/organizer">Organizers</a>
+          <a mat-list-item routerLink="/home/schedule">Schedules</a>
+          <a mat-list-item routerLink="/home/student">Students</a>
+          <a mat-list-item routerLink="/home/interview-list">Interviews</a>
+          <a mat-list-item routerLink="/home/interview-result"
+            >Interviews Report</a
+          >
+        </div>
+        <div *ngIf="isInterviewer">
+          <a mat-list-item routerLink="/home/interview-list">Interviews</a>
+          <a mat-list-item routerLink="/home/interview-result"
+            >Interview Result</a
+          >
+        </div>
+        <div *ngIf="isOrganizer">
+          <a mat-list-item routerLink="/home/student">Students</a>
+        </div>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div id="dashboard-content"><router-outlet></router-outlet></div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+<!-- <div *ngIf="!shouldRun">Please open on Stackblitz to see result</div> -->
+{{ role }}

@@ -1,0 +1,125 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>{{ student.studentName }}</mat-card-title>
+    <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+  </mat-card-header>
+  <mat-card-content>
+    <table>
+      <tr>
+        <th>Education Details</th>
+      </tr>
+      <tr>
+        <td>Degree Stream</td>
+        <td>:</td>
+        <td>{{ student.studentEducationDetail.degreeStream }}</td>
+      </tr>
+      <tr>
+        <td>Year Of Passout</td>
+        <td>:</td>
+        <td>{{ student.studentEducationDetail.yearOfPassout }}</td>
+      </tr>
+      <tr>
+        <td>Tenth Aggregrate</td>
+        <td>:</td>
+        <td>{{ student.studentEducationDetail.tenthAggregate }}</td>
+      </tr>
+      <tr>
+        <td>Tweleth Aggregrate</td>
+        <td>:</td>
+        <td>{{ student.studentEducationDetail.twelthAggregate }}</td>
+      </tr>
+      <tr *ngIf="student.studentEducationDetail.diplomaAggregate">
+        <td>Diploma Aggregrate</td>
+        <td>:</td>
+        <td>{{ student.studentEducationDetail.diplomaAggregate }}</td>
+      </tr>
+      <tr>
+        <td>Degree Aggregrate</td>
+        <td>:</td>
+        <td>{{ student.studentEducationDetail.degreeAggregate }}</td>
+      </tr>
+      <tr *ngIf="student.studentEducationDetail.diplomaAggregate">
+        <td>Masters Aggregrate</td>
+        <td>:</td>
+        <td>{{ student.studentEducationDetail.mastersAggregate }}</td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>Personal Details</th>
+      </tr>
+      <tr>
+        <td>Date of Birth</td>
+        <td>:</td>
+        <td>{{ student.studentDob }}</td>
+      </tr>
+      <tr>
+        <td>Gender</td>
+        <td>:</td>
+        <td>{{ student.studentGender }}</td>
+      </tr>
+      <tr>
+        <td>Mobile Number</td>
+        <td>:</td>
+        <td>{{ student.studentMobileNumber }}</td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>:</td>
+        <td>{{ student.studentEmail }}</td>
+      </tr>
+      <tr>
+        <td>Aadhar Number</td>
+        <td>:</td>
+        <td>{{ student.studentAadharNumber }}</td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td>:</td>
+        <td>
+          {{
+            student.address.street +
+              "," +
+              student.address.locality +
+              "," +
+              student.address.city +
+              "," +
+              student.address.state +
+              "," +
+              student.address.pincode
+          }}
+        </td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>Skills</th>
+      </tr>
+      <tr>
+        <td>Primary Skill</td>
+        <td>:</td>
+        <td>
+          {{ student.studentEducationDetail.primarySkill.interviewerSkillName }}
+        </td>
+      </tr>
+      <tr>
+        <td>Secondary Skill</td>
+        <td>:</td>
+        <td>
+          {{
+            student.studentEducationDetail.secondarySkill.interviewerSkillName
+          }}
+        </td>
+      </tr>
+      <tr>
+        <td>Other Skills</td>
+        <td>:</td>
+        <td>{{ student.studentEducationDetail.otherSkills }}</td>
+      </tr>
+    </table>
+    <!-- <p>{{ student | json }}</p> -->
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" mat-dialog-close>close</button>
+  </mat-card-actions>
+</mat-card>

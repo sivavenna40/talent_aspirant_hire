@@ -1,0 +1,42 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title
+      >{{ "Interview Level " + interviewRoundData.interviewRoundNumber }}
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <table>
+      <tr>
+        <td>Interview Round Result</td>
+
+        <td>{{ interviewRoundData.interviewRoundResult }}</td>
+      </tr>
+      <tr>
+        <td>Interviewer</td>
+        <td>{{ interviewRoundData.interviewer.interviewerName }}</td>
+      </tr>
+
+      <!-- <tr>
+        <th>Education Details</th>
+      </tr> -->
+      <tr>
+        <th>Skill Name</th>
+        <th>Rating</th>
+        <th>Feedback</th>
+      </tr>
+      <tr *ngFor="let rating of interviewRoundData.interviewSkillRatings">
+        <td>{{ rating.interviewSkill.interviewSkillName }}</td>
+        <td>{{ rating.interviewSkillRatingAchieved }}</td>
+        <td>{{ rating.interviewSkillFeedback }}</td>
+      </tr>
+      <tr>
+        <td>Overall Interview Feedback</td>
+        <td></td>
+        <td>{{ interviewRoundData.interviewRoundFeedback }}</td>
+      </tr>
+    </table>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" mat-dialog-close>close</button>
+  </mat-card-actions>
+</mat-card>

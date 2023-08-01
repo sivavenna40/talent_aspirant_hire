@@ -1,0 +1,67 @@
+<div class="form-container">
+  <form
+    class="example-form"
+    [formGroup]="interviewScheduleForm"
+    (submit)="submitInterviewSchedule()"
+  >
+    <!-- <h1>InterviewSchedule Registration Form</h1> -->
+    <table>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Interview Date</mat-label>
+            <input
+              matInput
+              [(ngModel)]="selectedDate"
+              [matDatepicker]="picker"
+              placeholder="Select a date"
+              formControlName="interviewScheduleDate"
+              name="interviewScheduleDate"
+              required
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+
+    <div formGroupName="organisation">
+      <mat-form-field class="example-full-width">
+        <mat-label>Select Organisation</mat-label>
+        <mat-select formControlName="organisationId">
+          <mat-option
+            *ngFor="let organisation of getOrganisations(); let i = index"
+            [value]="organisation.organisationId"
+          >
+            {{ organisation.organisationName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Select Interviewer</mat-label>
+      <mat-select formControlName="interviewerIds" multiple>
+        <mat-option
+          *ngFor="let interviewer of getInterviewers(); let i = index"
+          [value]="interviewer.interviewerId"
+        >
+          {{ interviewer.interviewerName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="flex-center">
+      <button mat-raised-button type="submit" color="primary">
+        {{ submitType }}
+      </button>
+      <button mat-raised-button mat-dialog-close type="button" color="warn">
+        Close
+      </button>
+    </div>
+  </form>
+</div>

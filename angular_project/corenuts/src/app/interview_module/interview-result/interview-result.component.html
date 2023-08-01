@@ -1,0 +1,124 @@
+<div class="custom-filter">
+  <mat-form-field class="demo-button">
+    <mat-label>Select organisation</mat-label>
+    <mat-select
+      [(value)]="selectedOrganisationId"
+      (valueChange)="getInterviewSchedulesByOrganisationId()"
+    >
+      <mat-option [value]="0">All</mat-option>
+      <mat-option
+        *ngFor="let organisation of organisations"
+        [value]="organisation.organisationId"
+        >{{ organisation.organisationName }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="demo-button">
+    <mat-label>Select Date</mat-label>
+    <mat-select [(value)]="selectedScheduledDate">
+      <mat-option [value]="'All'">All</mat-option>
+      <mat-option
+        *ngFor="let schedule of interviewSchedules"
+        [value]="schedule.interviewScheduleDate"
+        >{{ schedule.interviewScheduleDate }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="demo-button">
+    <mat-label>Select option</mat-label>
+    <mat-select [(value)]="selectedOption">
+      <mat-option *ngFor="let opt of getInterviewStages()" [value]="opt">{{
+        opt
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="getStudents()">
+    search
+  </button>
+  <!-- <mat-form-field class="demo-button">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="" #input />
+  </mat-form-field> -->
+</div>
+
+<div class="result-container">
+  <mat-card class="example-card container" [ngStyle]="getStyle('total')">
+    {{ "Total Students  :  " + totalStudentsAttended }}
+  </mat-card>
+  <mat-card
+    class="example-card container"
+    *ngFor="let element of selectionInformation"
+    [ngStyle]="getStyle(element[0])"
+  >
+    <ng-container *ngIf="element[0]; else elseBlock">
+      {{ element[0] + "  :  " }}
+    </ng-container>
+    <ng-template #elseBlock>
+      {{ "Not Attended  :" }}
+    </ng-template>
+    {{ element[1] }}
+  </mat-card>
+</div>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="studentId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let row">{{ row.studentId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="completedInterviewRounds">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Level</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.completedInterviewRounds }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="studentName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let row">{{ row.studentName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="studentAadharNumber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Aadhar Number</th>
+      <td mat-cell *matCellDef="let row">{{ row.studentAadharNumber }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="interviewResult">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Interview Result
+      </th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.interviewFinalResult }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+      <td mat-cell *matCellDef="let row">
+        <button
+          style="padding: 20px"
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/home/feedback-detail/', row.studentId]"
+        >
+          Feedback Details
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <!-- <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">
+        No data matching the filter "{{ input.value }}"
+      </td>
+    </tr> -->
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[ 10, 25, 100]"
+    aria-label="Select page of users"
+  ></mat-paginator>
+</div>
