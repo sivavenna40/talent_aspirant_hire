@@ -11,3 +11,10 @@ export class User {
     public roles: string[]
   ) {}
 }
+
+export class Reset {
+  constructor(public confirmPassword: string, public newPassword: string) {}
+}
+// export class Otp {
+//   constructor(public message: string, public Secretkey: number) {}
+// }

@@ -1,12 +1,33 @@
-<div class="page-body">
-  <div class="flex-box">
-    <mat-card class="mat-elevation-z12">
-      <mat-card-title style="text-align: center">Sign In Page</mat-card-title>
+<body>
+  <nav
+    class="navbar navbar-light bg-light"
+    style="background: linear-gradient(to right, #f0f3f3, #317aca)"
+  >
+    <a class="navbar-brand" href="#" style="margin-left: 10vh">
+      <img src="" height="55" alt="" />
+    </a>
+  </nav>
+
+  <div class="login-page">
+    <mat-card class="mat-elevation-z12" style="opacity: 0.75; height: 80%">
+      <mat-card-title
+        style="text-align: center"
+        *ngIf="!this.showForgotPassword && !this.proceedtoResetpage"
+        >SignIn/SignUp</mat-card-title
+      >
+      <mat-card-title
+        style="text-align: center"
+        *ngIf="this.showForgotPassword && !this.proceedtoResetpage"
+        >Forgot Password ?</mat-card-title
+      >
       <mat-tab-group mat-stretch-tabs class="example-stretched-tabs">
-        <mat-tab label="Sign In">
+        <mat-tab
+          label="Sign In"
+          *ngIf="!this.showForgotPassword || proceedToSignUpPage"
+        >
           <mat-card-content>
             <form [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
-              <mat-form-field>
+              <mat-form-field class="value-sigin">
                 <input
                   matInput
                   placeholder="Email"
@@ -21,136 +42,217 @@
                 >
                 <mat-icon matSuffix>email</mat-icon>
               </mat-form-field>
-
-              <mat-form-field>
+              <mat-form-field class="value-sigin">
                 <input
                   matInput
+                  [type]="hidePassword ? 'password' : 'text'"
                   placeholder="Password"
-                  type="password"
                   name="password"
                   formControlName="password"
                 />
+                <mat-icon matSuffix (click)="togglePasswordVisibility()">{{
+                  hidePassword ? "visibility_off" : "visibility"
+                }}</mat-icon>
                 <mat-error *ngIf="password?.errors?.['required']"
                   >Password is required</mat-error
                 >
-                <mat-error
-                  *ngIf="password?.errors && password?.errors?.['minlength']"
-                  >Password must be of length 6
-                </mat-error>
-                <mat-icon matSuffix>lock</mat-icon>
+                <mat-error *ngIf="password?.errors?.['minlength']"
+                  >Password must be at least 6 characters long</mat-error
+                >
               </mat-form-field>
-
+              <div>
+                <p-toast></p-toast>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  class="login-button"
+                  [disabled]="!loginForm.valid"
+                >
+                  Sign In
+                </button>
+              </div>
               <button
                 mat-raised-button
-                color="primary"
-                class="login-button"
-                [disabled]="!loginForm.valid"
+                color="warn"
+                class="forgot-button"
+                (click)="forgotpassword()"
               >
-                Sign In
+                Forgot password
               </button>
             </form>
           </mat-card-content>
         </mat-tab>
 
-        <!-- <mat-tab label="Sign Up">
+        <mat-tab
+          label="Forgot Password"
+          *ngIf="
+            this.showForgotPassword &&
+            !this.isenteringotp &&
+            !this.proceedtoResetpage
+          "
+        >
           <mat-card-content>
+            <br />
             <form
-              [formGroup]="registerForm"
-              (ngSubmit)="onRegister()"
+              [formGroup]="forgotpasswordForm"
+              (ngSubmit)="onSubmitForgotPassword()"
               novalidate
             >
-              <mat-form-field>
-                <input
-                  matInput
-                  placeholder=" Name"
-                  name="username"
-                  formControlName="username"
-                />
-                <mat-icon matSuffix>perm_identity</mat-icon>
-                <mat-error *ngIf="username?.invalid"
-                  >name is required</mat-error
-                >
-              </mat-form-field>
-              <mat-form-field>
+              <mat-form-field class="value-sigin">
                 <input
                   matInput
                   placeholder="Email"
                   name="email"
                   formControlName="email"
-                  value="sr@gmail.com"
                 />
-                <mat-error *ngIf="email?.invalid">Email is required</mat-error>
+                <mat-error *ngIf="email?.errors?.['required']"
+                  >Email is required</mat-error
+                >
+                <mat-error *ngIf="email?.errors?.['email']"
+                  >email is not valid</mat-error
+                >
                 <mat-icon matSuffix>email</mat-icon>
               </mat-form-field>
-              <mat-form-field>
-                <input
-                  matInput
-                  placeholder="Phone Number"
-                  type="number"
-                  required
-                  minlength="10"
-                  name="phonenumber"
-                  formControlName="phonenumber"
-                />
-                <mat-error
-                  *ngIf="phonenumber?.errors && phonenumber?.errors?.['required']"
-                  >phone number is required</mat-error
-                >
-                <mat-error
-                  *ngIf="phonenumber?.errors && phonenumber?.errors?.['minlength']"
-                >
-                  phone number must be of length 10</mat-error
-                >
-              </mat-form-field>
-              <mat-form-field>
-                <input
-                  matInput
-                  placeholder="Password"
-                  type="password"
-                  required
-                  minlength="6"
-                  name="password"
-                  formControlName="password"
-                />
-                <mat-error
-                  *ngIf="password?.errors && password?.errors?.['required']"
-                  >Password is required</mat-error
-                >
-                <mat-error
-                  *ngIf="password?.errors && password?.errors?.['minlength']"
-                >
-                  Password must be of length 6</mat-error
-                >
-                <mat-icon matSuffix>lock</mat-icon>
-              </mat-form-field>
-              <mat-form-field class="example-full-width">
-                <mat-label>Select Skills</mat-label>
-                <mat-select formControlName="roles" multiple>
-                  <mat-option
-                    *ngFor="
-                      let role of ['Admin', 'Interviewer', 'Organizer'];
-                      let i = index
-                    "
-                    [value]="role"
-                  >
-                    {{ role }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-
+              <br /><br />
               <button
                 mat-raised-button
                 color="primary"
                 class="login-button"
-                type="submit"
-                [disabled]="!registerForm.valid"
+                [disabled]="!forgotpasswordForm.valid"
               >
-                Sign Up
+                Continue
               </button>
             </form>
           </mat-card-content>
-        </mat-tab> -->
+        </mat-tab>
+
+        <mat-tab
+          label="OTP VERIFICATION"
+          *ngIf="showForgotPassword && isenteringotp && !proceedtoResetpage"
+        >
+          <mat-card-content>
+            <div class="container">
+              <div class="inputfield">
+                <input
+                  [ngStyle]="{ 'border-color': borderColor }"
+                  type="number"
+                  maxlength="1"
+                  class="input"
+                  [(ngModel)]="first"
+                  name="first"
+                  onKeyPress="if(this.value.length==1) return false;"
+                />
+                <input
+                  [ngStyle]="{ 'border-color': borderColor }"
+                  type="number"
+                  maxlength="1"
+                  class="input"
+                  [(ngModel)]="second"
+                  name="second"
+                  onKeyPress="if(this.value.length==1) return false;"
+                />
+                <input
+                  [ngStyle]="{ 'border-color': borderColor }"
+                  type="number"
+                  maxlength="1"
+                  class="input"
+                  [(ngModel)]="third"
+                  name="third"
+                  onKeyPress="if(this.value.length==1) return false;"
+                />
+                <input
+                  [ngStyle]="{ 'border-color': borderColor }"
+                  type="number"
+                  maxlength="1"
+                  class="input"
+                  [(ngModel)]="fourth"
+                  name="fourth"
+                  onKeyPress="if(this.value.length==1) return false;"
+                />
+              </div>
+            </div>
+            <div class="ResendOTP">
+              <p class="centered-text">Resend Otp in 00: {{ remainingTime }}</p>
+              <button
+                mat-raised-button
+                color="primary"
+                class="reset-button"
+                [disabled]="remainingTime > 0"
+                (click)="resendotp()"
+              >
+                Resend Otp
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-tab>
+
+        <mat-tab
+          label="RESET"
+          *ngIf="this.proceedtoResetpage && this.showForgotPassword"
+        >
+          <mat-card-content>
+            <form [formGroup]="resetForm" (ngSubmit)="reset()" novalidate>
+              <br />
+              <br />
+              <br />
+              <mat-form-field class="value">
+                <input
+                  matInput
+                  [type]="hidePassword ? 'password' : 'text'"
+                  placeholder="Password"
+                  name="Password"
+                  formControlName="password"
+                />
+                <mat-icon matSuffix (click)="togglePasswordVisibility()">{{
+                  hidePassword ? "visibility_off" : "visibility"
+                }}</mat-icon>
+                <mat-error *ngIf="password?.errors?.['required']"
+                  >Password is required</mat-error
+                >
+                <mat-error *ngIf="password?.errors?.['minlength']"
+                  >Password must be at least 8 characters long</mat-error
+                >
+              </mat-form-field>
+
+              <mat-form-field class="value">
+                <input
+                  matInput
+                  [type]="hidePassword ? 'password' : 'text'"
+                  placeholder="Confirm password"
+                  name="Confirm password"
+                  formControlName="confirmpassword"
+                />
+                <mat-icon matSuffix (click)="togglePasswordVisibility()">{{
+                  hidePassword ? "visibility_off" : "visibility"
+                }}</mat-icon>
+                <mat-error *ngIf="confirmpassword?.errors?.['required']"
+                  >Password is required</mat-error
+                >
+                <mat-error
+                  *ngIf="
+                    resetForm.get('password')?.value !=
+                    resetForm.get('confirmpassword')?.value
+                  "
+                  >Password doesnot match</mat-error
+                >
+              </mat-form-field>
+
+              <div>
+                <p-toast></p-toast>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  class="login-button"
+                  type="submit"
+                  [disabled]="!resetForm.valid"
+                >
+                  Reset
+                </button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-tab>
       </mat-tab-group>
     </mat-card>
   </div>
-</div>
+</body>

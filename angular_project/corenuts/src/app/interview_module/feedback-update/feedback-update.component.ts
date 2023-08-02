@@ -113,9 +113,14 @@ export class FeedbackUpdateComponent implements OnInit {
     ) {
       this.finalResult = 'On Hold';
     } else if (
-      this.interviewRoundForm.get('interviewRoundResult')?.value === 'Selected'
+      this.interviewRoundForm.get('interviewRoundResult')?.value ===
+        'Selected' &&
+      this.studentFinalResultForm.get('interviewFinalResult')?.value !=
+        'Selected'
     ) {
       this.finalResult = 'In Progress';
+    } else {
+      this.finalResult = 'Selected';
     }
     this.studentFinalResultForm.patchValue({
       interviewFinalResult: this.finalResult,

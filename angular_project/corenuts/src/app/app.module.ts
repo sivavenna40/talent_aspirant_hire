@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -40,6 +41,7 @@ import { InterviewSkillFormComponent } from './interview_module/interview-skill-
 import { InterviewScheduleViewComponent } from './admin_module/schedule/interview-schedule-view/interview-schedule-view.component';
 import { InterviewScheduleFormComponent } from './admin_module/schedule/interview-schedule-form/interview-schedule-form.component';
 import { DatePipe } from '@angular/common';
+import { ToastModule } from 'primeng/toast';
 import { StudentFormComponent } from './interview_module/student/student-form/student-form.component';
 import { InterviewerSkillFormComponent } from './admin_module/interviewer/interviewer-skill-form/interviewer-skill-form.component';
 import { InterviewerSkillViewComponent } from './admin_module/interviewer/interviewer-skill-view/interviewer-skill-view.component';
@@ -65,7 +67,6 @@ import { LoginComponent } from './login/login.component';
     InterviewReportComponent,
     InterviewSkillComponent,
     OrganizerViewComponent,
-
     OrganizerFormComponent,
     InterviewSkillFormComponent,
     InterviewScheduleViewComponent,
@@ -104,10 +105,12 @@ import { LoginComponent } from './login/login.component';
     HttpClientModule,
     MatPaginatorModule,
     MatSortModule,
+    MatSnackBarModule,
     MatTableModule,
     MatInputModule,
     MatRadioModule,
     MatCheckboxModule,
+    ToastModule,
   ],
   providers: [
     RestDataSource,

@@ -1,7 +1,10 @@
 package com.core.corenuts.controller;
 
+import com.core.corenuts.request.ChangePassword;
+import com.core.corenuts.request.ForgotRequest;
 import com.core.corenuts.request.LoginRequest;
 import com.core.corenuts.request.SignupRequest;
+import com.core.corenuts.service.EmailService;
 import com.core.corenuts.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,8 @@ public class UserController {
 	@Autowired
 	private UserService service;
 
+	@Autowired
+	EmailService emailService;
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
 		return ResponseEntity.ok(service.login(loginRequest));
@@ -35,7 +40,17 @@ public class UserController {
 
 	@GetMapping("/admin")
 	public String admin() {
-		return "acessed admin";
+		return "accessed admin";
+	}
+
+	@PostMapping("/otptoemail")
+	public String sendEmail(@RequestBody ForgotRequest forgotRequest) {
+		return emailService.sendOtpByEmail(forgotRequest.getEmail());
+	}
+
+	@PutMapping("newpassword/{email}")
+	public String changePassword(@PathVariable (name="email") String email, @RequestBody ChangePassword changePassword){
+		return service.changePassword(email,changePassword.getPassword());
 	}
 
 }

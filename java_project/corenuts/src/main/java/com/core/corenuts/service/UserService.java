@@ -5,6 +5,7 @@ import com.core.corenuts.repo.AdminRepo;
 import com.core.corenuts.repo.InterviewerRepo;
 import com.core.corenuts.repo.OrganizerRepo;
 import com.core.corenuts.repo.UserRepository;
+import com.core.corenuts.request.ForgotRequest;
 import com.core.corenuts.request.LoginRequest;
 import com.core.corenuts.request.SignupRequest;
 import com.core.corenuts.response.JwtResponse;
@@ -21,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,20 +32,15 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
+
 	@Autowired
 	private AdminRepo adminRepo;
-	
-	
 	@Autowired
 	private OrganizerRepo organizerRepo;
 	
 	@Autowired
 	private InterviewerRepo interviewerRepo;
-	
-	
-	
-	
 	@Autowired
 	private RolesUtils rolesUtils;
 	
@@ -70,6 +67,13 @@ public class UserService {
 		return new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(),
 				userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet())
 		);
+	}
+	public String changePassword(String email, String password) {
+		User user=userRepository.findByEmail(email).get();
+		String encodedPassword=encoder.encode(password);
+		user.setPassword(encodedPassword);
+		userRepository.save(user);
+		return "Password Changed Successfully";
 	}
 
 	public String register(SignupRequest signupRequest) {
